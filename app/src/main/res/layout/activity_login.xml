@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:fitsSystemWindows="true"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="30dp"
+        android:src="@drawable/title" />
+
+    <EditText
+        android:layout_width="290dp"
+        android:maxLines="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text"
+        android:hint="@string/team_name"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="23sp" />
+
+    <EditText
+        android:layout_width="290dp"
+        android:maxLines="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/edit_text"
+        android:defaultFocusHighlightEnabled="true"
+        android:hint="@string/roll_no1"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="23sp"
+        tools:targetApi="o" />
+
+    <EditText
+        android:layout_width="290dp"
+       android:maxLines="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/edit_text"
+        android:hint="@string/roll_no2"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="23sp" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_back"
+        android:text="@string/play"
+        android:textSize="23sp"
+        android:textColor="@color/white"/>
+
+
+</LinearLayout>

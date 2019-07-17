@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Quiz</string>
+    <string name="team_name">Team Name</string>
+    <string name="roll_no1">Roll No1</string>
+    <string name="roll_no2">Roll No2</string>
+    <string name="play">Play</string>
+</resources>
