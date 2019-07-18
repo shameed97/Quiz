@@ -4,4 +4,14 @@
     <string name="roll_no1">Roll No1</string>
     <string name="roll_no2">Roll No2</string>
     <string name="play">Play</string>
+    <string name="round1">Round 1</string>
+    <string name="round_2">Round 2</string>
+    <string name="_00_00">00:00</string>
+    <string name="next">Next</string>
+    <string name="here_the_questions_will_display_from_database">Here the Questions Will Display From Database ?</string>
+    <string name="x">X</string>
+    <string name="answer_1">Answer 1</string>
+    <string name="answer_2">Answer 2</string>
+    <string name="answer_3">Answer 3</string>
+    <string name="answer_4">Answer 4</string>
 </resources>
