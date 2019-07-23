@@ -9,10 +9,6 @@
     <string name="_00_00">00:00</string>
     <string name="next">Next</string>
     <string name="x">X</string>
-    <string name="answer_1">Answer 1</string>
-    <string name="answer_2">Answer 2</string>
-    <string name="answer_3">Answer 3</string>
-    <string name="answer_4">Answer 4</string>
     <string name="q1">The first mechanical machine designed by charles Babbage was called ?</string>
     <string name="q2">Which term is related to Database ?</string>
     <string name="q3">Web page are written by using ?</string>
@@ -27,4 +23,43 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="abacus">Abacus</string>
+    <string name="analytical_engine">Analytical Engine</string>
+    <string name="calculator">Calculator</string>
+    <string name="processor">Processor</string>
+    <string name="oracle">Oracle</string>
+    <string name="c">C</string>
+    <string name="java">Java</string>
+    <string name="c_">C++</string>
+    <string name="ftp">FTP</string>
+    <string name="http">HTTP</string>
+    <string name="html">HTML</string>
+    <string name="url">URL</string>
+    <string name="_16_bits">16 bits</string>
+    <string name="_4_bits">4 bits</string>
+    <string name="_8_bits">8 bits</string>
+    <string name="_2_bits">2 bits</string>
+    <string name="syntax_error">Syntax error</string>
+    <string name="internal_error">Internal error</string>
+    <string name="semantic_error">Semantic error</string>
+    <string name="logical_error">Logical error</string>
+    <string name="dennis_ritchie">Dennis Ritchie</string>
+    <string name="david_filo">David Filo</string>
+    <string name="vint_cerf">Vint Cerf</string>
+    <string name="steve_case">Steve Case</string>
+    <string name="_8_keys">8 keys</string>
+    <string name="_12_keys">12 keys</string>
+    <string name="_14_keys">14 keys</string>
+    <string name="_13_keys">13 keys</string>
+    <string name="martin_cooper">Martin Cooper</string>
+    <string name="jackma">Jackma</string>
+    <string name="ericson">Ericson</string>
+    <string name="steve_jobs">Steve Jobs</string>
+    <string name="dennis_ritche">Dennis Ritche</string>
+    <string name="steve_obs">Steve Jobs</string>
+    <string name="charles">Charles</string>
+    <string name="vint_erf">Vint Cerf</string>
+    <string name="secondary">Secondary</string>
+    <string name="tertiary">Tertiary</string>
+    <string name="primary">Primary</string>
 </resources>

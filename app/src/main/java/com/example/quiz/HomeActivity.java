@@ -6,14 +6,19 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.quiz.round1QFragments.QuestionsActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
     private Dialog dialog;
     private Button button1, button2;
+    String team_name;
+    String button_st="false";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +27,15 @@ public class HomeActivity extends AppCompatActivity {
         dialog = new Dialog(this);
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
-        button2.setEnabled(false);
 
+        //Code for enabling and Disabling button
+            button2.setEnabled(false);
+       //End Code for Enabling and Disabling button
+
+        //Getting Team Name from LoginActivity
+        Intent intent=getIntent();
+        team_name=intent.getStringExtra("team_name");
+        //End Getting Team Name from LoginActivity
 
     }
 
@@ -46,7 +58,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomeActivity.this, QuestionsActivity.class));
+                Intent intent=new Intent(HomeActivity.this, QuestionsActivity.class);
+                intent.putExtra("team_name",team_name);
+                startActivity(intent);
                 dialog.dismiss();
             }
         });
@@ -56,17 +70,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     // End  Code Round1 button with Dialog window
-    /*@Override
-    public void onBackPressed() {
-        button1.setEnabled(false);
-        button2.setEnabled(true);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "Its Working...", Toast.LENGTH_SHORT).show();
-            }
-        });
-        super.onBackPressed();
-    }*/
 
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

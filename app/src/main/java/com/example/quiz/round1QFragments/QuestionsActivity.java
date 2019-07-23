@@ -1,6 +1,7 @@
-package com.example.quiz;
+package com.example.quiz.round1QFragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -12,9 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.example.quiz.HomeActivity;
+import com.example.quiz.R;
 
 import java.util.Locale;
 
@@ -25,18 +27,21 @@ public class QuestionsActivity extends AppCompatActivity {
     private CountDownTimer mCountDownTimer;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
     private AlertDialog.Builder builder;
-    private RadioGroup group;
-    private Button bt;
     private int count = 0;
-    private RadioButton radioButton1, radioButton2, radioButton3, radioButton4;
     private FragmentManager fragmentManager;
+    private String team_name;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
-        bt = findViewById(R.id.bt);
+        //Getting Team Name from HomeActivity
+        Intent intent = getIntent();
+        team_name = intent.getStringExtra("team_name");
+        //End Getting Team Name from HomeActivity
+        button = findViewById(R.id.bt);
         builder = new AlertDialog.Builder(this);
         mTextViewCountDown = findViewById(R.id.timer);
         startTimer();
@@ -47,7 +52,11 @@ public class QuestionsActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
+            Bundle bundle = new Bundle();
+            bundle.putString("sha", team_name);
             Q1Fragment q1Fragment = new Q1Fragment();
+            q1Fragment.setArguments(bundle);
+            //Log.d("sha",bundle.toString());
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragment_container, q1Fragment, null);
             fragmentTransaction.commit();
@@ -68,11 +77,12 @@ public class QuestionsActivity extends AppCompatActivity {
             public void onFinish() {
                 builder.setTitle("Time Up :");
                 builder.setMessage("Better Luck Next Time.\n\nEliminated from this Game...");
+                builder.setCancelable(false);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                        QuestionsActivity.super.onBackPressed();
+                        finishAffinity();
 
                     }
                 });
@@ -96,6 +106,7 @@ public class QuestionsActivity extends AppCompatActivity {
     public void onBackPressed() {
         builder.setTitle("Something went wrong:");
         builder.setMessage("If you go back you eliminated from this game");
+        builder.setCancelable(false);
         builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -116,49 +127,76 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     public void moveNext(View view) {
-       /* Q1Fragment a = (Q1Fragment) getSupportFragmentManager().findFragmentById(R.id.f1);
-        Q2Fragment b = (Q2Fragment) getSupportFragmentManager().findFragmentById(R.id.f2);
-        Q3Fragment c = (Q3Fragment) getSupportFragmentManager().findFragmentById(R.id.f3);
-
-        if (a == null)
-        {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q2Fragment(), null).commit();
-
-        }
-        else if (b == null) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q3Fragment(), null).commit();
-        }*/
-
+        //Placing Fragments by Button Click
         count++;
         Log.d("sha", "count" + count);
+        //Send Team name to Fragments using bundle
+        Bundle bundle = new Bundle();
+        bundle.putString("sha", team_name);
+        //End Send Team name to Fragments using bundle
+
         if (count == 1) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q2Fragment(), null).commit();
+            new Q1Fragment().onDetach();
+            Q2Fragment q2Fragment = new Q2Fragment();
+            q2Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q2Fragment, null).commit();
 
         }
         if (count == 2) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q3Fragment(), null).commit();
+            new Q2Fragment().onDetach();
+            Q3Fragment q3Fragment = new Q3Fragment();
+            q3Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q3Fragment, null).commit();
         }
         if (count == 3) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q4Fragment(), null).commit();
+            new Q3Fragment().onDetach();
+            Q4Fragment q4Fragment = new Q4Fragment();
+            q4Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q4Fragment, null).commit();
         }
         if (count == 4) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q5Fragment(), null).commit();
+            new Q4Fragment().onDetach();
+            Q5Fragment q5Fragment = new Q5Fragment();
+            q5Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q5Fragment, null).commit();
         }
         if (count == 5) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q6Fragment(), null).commit();
+            new Q5Fragment().onDetach();
+            Q6Fragment q6Fragment = new Q6Fragment();
+            q6Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q6Fragment, null).commit();
         }
         if (count == 6) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q7Fragment(), null).commit();
+            new Q6Fragment().onDetach();
+            Q7Fragment q7Fragment = new Q7Fragment();
+            q7Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q7Fragment, null).commit();
         }
         if (count == 7) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q8Fragment(), null).commit();
+            new Q7Fragment().onDetach();
+            Q8Fragment q8Fragment = new Q8Fragment();
+            q8Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q8Fragment, null).commit();
         }
         if (count == 8) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q9Fragment(), null).commit();
+            new Q8Fragment().onDetach();
+            Q9Fragment q9Fragment = new Q9Fragment();
+            q9Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q9Fragment, null).commit();
         }
         if (count == 9) {
-            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, new Q10Fragment(), null).commit();
+            new Q9Fragment().onDetach();
+            Q10Fragment q10Fragment = new Q10Fragment();
+            q10Fragment.setArguments(bundle);
+            this.fragmentManager.beginTransaction().replace(R.id.fragment_container, q10Fragment, null).commit();
+            button.setText("Finish");
         }
+        if (count == 10) {
+            finish();
+            Intent intent=new Intent(QuestionsActivity.this, HomeActivity.class);
+            startActivity(intent);
+        }
+        //End Placing Fragments by Button Click
     }
 
 }

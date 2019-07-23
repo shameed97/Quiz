@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         if (Name.equals("") || Roll_1.equals("") || Roll_2.equals("")) {
             builder.setTitle("Something Went Wrong :");
             builder.setMessage("Please fill all the fields....");
+            builder.setCancelable(false);
             displayAlert("input_error");
         } else {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                         String message = jsonObject.getString("message");
                         builder.setTitle("Login Information...");
                         builder.setMessage(message);
+                        builder.setCancelable(false);
                         displayAlert(code);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -67,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("sha", error.toString());
+                    Log.d("sha", error.toString());
                     error.printStackTrace();
                 }
             }) {
@@ -98,7 +100,9 @@ public class LoginActivity extends AppCompatActivity {
                     roll2.setText("");
                 } else if (code.equals("reg_success")) {
 
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    Intent intent=new Intent(new Intent(LoginActivity.this, HomeActivity.class));
+                    intent.putExtra("team_name",Name);
+                    startActivity(intent);
                 }
 
             }
