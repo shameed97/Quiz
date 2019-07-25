@@ -1,7 +1,10 @@
 package com.example.quiz.round1QFragments;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,10 +18,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.quiz.HomeActivity;
+import com.example.quiz.Mysingleton;
 import com.example.quiz.R;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class QuestionsActivity extends AppCompatActivity {
 
@@ -31,6 +44,8 @@ public class QuestionsActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private String team_name;
     private Button button;
+    private String markSelect_url = "http://192.168.43.11/tech/markReturn.php";
+    private Dialog dialog,dialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +58,8 @@ public class QuestionsActivity extends AppCompatActivity {
         //End Getting Team Name from HomeActivity
         button = findViewById(R.id.bt);
         builder = new AlertDialog.Builder(this);
+        dialog=new Dialog(this);
+        dialog1=new Dialog(this);
         mTextViewCountDown = findViewById(R.id.timer);
         startTimer();
 
@@ -56,7 +73,6 @@ public class QuestionsActivity extends AppCompatActivity {
             bundle.putString("sha", team_name);
             Q1Fragment q1Fragment = new Q1Fragment();
             q1Fragment.setArguments(bundle);
-            //Log.d("sha",bundle.toString());
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragment_container, q1Fragment, null);
             fragmentTransaction.commit();
@@ -129,7 +145,6 @@ public class QuestionsActivity extends AppCompatActivity {
     public void moveNext(View view) {
         //Placing Fragments by Button Click
         count++;
-        Log.d("sha", "count" + count);
         //Send Team name to Fragments using bundle
         Bundle bundle = new Bundle();
         bundle.putString("sha", team_name);
@@ -192,11 +207,79 @@ public class QuestionsActivity extends AppCompatActivity {
             button.setText("Finish");
         }
         if (count == 10) {
-            finish();
-            Intent intent=new Intent(QuestionsActivity.this, HomeActivity.class);
-            startActivity(intent);
+
+            //final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, markSelect_url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        TextView pop_textView,d1Text;
+                        Button Butround2,ButExit;
+                        String result=response;
+                          dialog.setContentView(R.layout.select_popup);
+                          dialog1.setContentView(R.layout.sad_popup);
+                          dialog.setCancelable(false);
+                          dialog1.setCancelable(false);
+                          pop_textView=dialog.findViewById(R.id.scoreDis);
+                          Butround2=dialog.findViewById(R.id.butRound2);
+                          d1Text=dialog1.findViewById(R.id.d1score);
+                          ButExit=dialog1.findViewById(R.id.butExit);
+                         pop_textView.setText(result);
+                         d1Text.setText(result);
+                          int high_Score=25;
+                          if (high_Score<=Integer.parseInt(result))
+                        {
+                            Butround2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent=new Intent(QuestionsActivity.this, HomeActivity.class);
+                                    intent.putExtra("team_name",team_name);
+                                    startActivity(intent);
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            dialog.show();
+                        }
+                        else
+                        {
+                            ButExit.setOnClickListener(new View.OnClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                                @Override
+                                public void onClick(View v) {
+                                    finishAffinity();
+                                }
+                            });
+                            dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            dialog1.show();
+                        }
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("res", error.toString());
+                    error.printStackTrace();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("team_name", team_name);
+                    return params;
+                }
+            };
+
+            Mysingleton.getInstance(QuestionsActivity.this).addtoRequest(stringRequest);
+
         }
         //End Placing Fragments by Button Click
     }
+
 
 }

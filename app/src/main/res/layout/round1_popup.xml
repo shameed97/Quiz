@@ -38,7 +38,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:singleLine="false"
-            android:text=" * First round contains 10 questions.\n * 5min time for 10 question.\n * If u get 25 mark You will go to second round.\n * Otherwise, u will exit from the game.\n * Good luck guys. "
+            android:text=" * First round contains 10 questions.\n * 5min time for 10 questions.\n * If u get 25 mark You will go to second round.\n * Otherwise, u will exit from the game.\n * Good luck guys. "
             android:textColor="@color/white"
             android:textSize="20sp" />
 

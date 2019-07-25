@@ -36,6 +36,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/button_back"
         android:gravity="center"
+        android:onClick="round2Start"
         android:text="@string/round_2"
         android:textColor="@color/white"
         android:textSize="23sp" />
