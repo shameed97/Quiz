@@ -78,8 +78,6 @@ public class Q1Fragment extends Fragment {
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("round1", String.valueOf(Integer.parseInt(mark)));
                                 params.put("team_name", team);
-                                Log.d("sha", String.valueOf(Integer.parseInt(mark)));
-                                Log.d("sha", team);
                                 return params;
                             }
                         };

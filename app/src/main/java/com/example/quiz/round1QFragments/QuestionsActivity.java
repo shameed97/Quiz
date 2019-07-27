@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.quiz.HomeActivity;
 import com.example.quiz.Mysingleton;
 import com.example.quiz.R;
+import com.example.quiz.SharedPreferencesConfig;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -46,6 +47,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private Button button;
     private String markSelect_url = "http://192.168.43.11/tech/markReturn.php";
     private Dialog dialog,dialog1;
+    public SharedPreferencesConfig sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class QuestionsActivity extends AppCompatActivity {
         dialog=new Dialog(this);
         dialog1=new Dialog(this);
         mTextViewCountDown = findViewById(R.id.timer);
+        sharedPreferences=new SharedPreferencesConfig(getApplicationContext());
         startTimer();
 
         //Add Question1 Fragment
@@ -103,8 +106,19 @@ public class QuestionsActivity extends AppCompatActivity {
                     }
                 });
 
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                try
+                {
+                    if (!QuestionsActivity.this.isFinishing())
+                    {
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Log.d("res","Error"+e);
+                }
 
             }
         }.start();
@@ -137,8 +151,20 @@ public class QuestionsActivity extends AppCompatActivity {
                 QuestionsActivity.super.onResume();
             }
         });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        try
+        {
+            if (!QuestionsActivity.this.isFinishing())
+            {
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+
+        }
+        catch (Exception e)
+        {
+            Log.d("res","Error"+e);
+        }
+
 
     }
 
@@ -208,6 +234,7 @@ public class QuestionsActivity extends AppCompatActivity {
         }
         if (count == 10) {
 
+            mCountDownTimer.cancel();
             //final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             StringRequest stringRequest = new StringRequest(Request.Method.POST, markSelect_url, new Response.Listener<String>() {
                 @Override
@@ -234,6 +261,7 @@ public class QuestionsActivity extends AppCompatActivity {
                                 public void onClick(View v) {
                                     Intent intent=new Intent(QuestionsActivity.this, HomeActivity.class);
                                     intent.putExtra("team_name",team_name);
+                                    sharedPreferences.writeLoginStatus(true);
                                     startActivity(intent);
                                     dialog.dismiss();
                                     finish();

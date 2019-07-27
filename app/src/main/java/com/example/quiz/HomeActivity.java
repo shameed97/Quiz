@@ -2,10 +2,12 @@ package com.example.quiz;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,8 +18,10 @@ import com.example.quiz.round2QFragments.Question2Activity;
 public class HomeActivity extends AppCompatActivity {
 
     private Dialog dialog,dialog2;
-    private Button button1, button2;
+    public Button button1, button2;
     String team_name;
+    public SharedPreferencesConfig sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +32,22 @@ public class HomeActivity extends AppCompatActivity {
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
 
+        sharedPreferences=new SharedPreferencesConfig(getApplicationContext());
         //Code for enabling and Disabling button
-            //button2.setEnabled(false);
+
+       if (sharedPreferences.readLoginStatus())
+        {
+            button2.setEnabled(true);
+        }
+       else
+       {
+           button2.setEnabled(false);
+       }
+
 
 
        //End Code for Enabling and Disabling button
+
 
         //Getting Team Name from LoginActivity
         Intent intent=getIntent();
@@ -43,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //Code Round1 button with Dialog window
     public void round1Start(View view) {
+
         Button play;
         TextView close;
         dialog.setContentView(R.layout.round1_popup);
@@ -73,7 +89,6 @@ public class HomeActivity extends AppCompatActivity {
 
     // End  Code Round1 button with Dialog window
 
-
     //Code Round2 button with Dialog window
     public void round2Start(View view) {
         Button play;
@@ -100,6 +115,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        sharedPreferences.writeLoginStatus(true);
         dialog2.show();
     }
 }

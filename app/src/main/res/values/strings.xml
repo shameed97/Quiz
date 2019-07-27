@@ -20,6 +20,9 @@
     <string name="q9">Who was the father of Internet ?</string>
     <string name="q10">RAM is which type of storage device ?</string>
 
+    <string name="Login_preferences">com.apk.res.android_login_preference</string>
+    <string name="login_status">com.apk.res.android_login_status</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
