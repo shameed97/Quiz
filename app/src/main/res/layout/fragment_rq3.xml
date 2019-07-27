@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/f1"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:padding="5dp"
+        tools:context=".round1QFragments.QuestionsActivity">
+
+
+        <TextView
+            android:id="@+id/questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="90dp"
+            android:gravity="center"
+            android:text="@string/alu_means"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:id="@+id/rbt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:buttonTint="@color/white"
+                android:text="@string/arithmetic_logic_unit"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <RadioButton
+                android:id="@+id/rbt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:buttonTint="@color/white"
+                android:text="@string/array_logic_unit"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <RadioButton
+                android:id="@+id/rbt3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:buttonTint="@color/white"
+                android:text="@string/application_logic_unit"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <RadioButton
+                android:id="@+id/rbt4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:buttonTint="@color/white"
+                android:text="@string/none_of_above"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+</ScrollView>

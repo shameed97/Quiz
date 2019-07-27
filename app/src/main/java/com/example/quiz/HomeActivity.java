@@ -118,5 +118,6 @@ public class HomeActivity extends AppCompatActivity {
         sharedPreferences.writeLoginStatus(true);
         dialog2.show();
     }
+
 }
 // End  Code Round2 button with Dialog window
