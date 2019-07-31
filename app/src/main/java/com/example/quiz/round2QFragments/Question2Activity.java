@@ -1,10 +1,14 @@
 package com.example.quiz.round2QFragments;
 
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -284,7 +288,7 @@ public class Question2Activity extends AppCompatActivity {
                             public void run() {
                                 displayNotification();
                             }
-                        },NOTIFICATION_TIME);
+                        }, NOTIFICATION_TIME);
 
                     } else {
                         new Handler().postDelayed(new Runnable() {
@@ -292,7 +296,7 @@ public class Question2Activity extends AppCompatActivity {
                             public void run() {
                                 displayNotificationError();
                             }
-                        },NOTIFICATION_TIME);
+                        }, NOTIFICATION_TIME);
 
                     }
 
@@ -320,12 +324,13 @@ public class Question2Activity extends AppCompatActivity {
 
     //Code for Notification
     public void displayNotification() {
+        notificationChannel();
         NotificationCompat.Builder builder1 = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL);
         builder1.setSmallIcon(R.drawable.logi_kutty);
         builder1.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
         builder1.setSound(Uri.parse("android.resource://com.example.quiz/" + R.raw.noti));
         builder1.setContentTitle("Result Notification :");
-        builder1.setContentText("your Score is" + result);
+        builder1.setContentText("Your Score is" + result);
         builder1.setSubText("Selected To Third Round...!");
         builder1.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
@@ -335,6 +340,7 @@ public class Question2Activity extends AppCompatActivity {
     }
 
     public void displayNotificationError() {
+        notificationChannelError();
         NotificationCompat.Builder builder1 = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL);
         builder1.setSmallIcon(R.drawable.logi_kutty);
         builder1.setSound(Uri.parse("android.resource://com.example.quiz/" + R.raw.noti));
@@ -351,4 +357,57 @@ public class Question2Activity extends AppCompatActivity {
 
     //End Code for Notification
 
+    //Code for Notification Channel
+    public void notificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Result Notification";
+            String description = "Your Score is  : " + result + "\nSelected to Third Round";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            AudioAttributes att = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                    .build();
+
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL, name, importance);
+            notificationChannel.setDescription(description);
+            notificationChannel.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
+            notificationChannel.enableVibration(true);
+            notificationChannel.enableLights(true);
+            notificationChannel.setSound(Uri.parse("android.resource://com.example.quiz/" + R.raw.noti),att);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(notificationChannel);
+
+
+        }
+    }
+        public void notificationChannelError()
+        {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            {
+                CharSequence name="Result Notification";
+                String description="Your Score is  : "+ result +"\nNot Selected to Third Round";
+                int importance=NotificationManager.IMPORTANCE_DEFAULT;
+
+                AudioAttributes att = new AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                        .build();
+
+                NotificationChannel notificationChannel=new NotificationChannel(NOTIFICATION_CHANNEL,name,importance);
+                notificationChannel.setDescription(description);
+                notificationChannel.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
+                notificationChannel.enableVibration(true);
+                notificationChannel.enableLights(true);
+                notificationChannel.setSound(Uri.parse("android.resource://com.example.quiz/" + R.raw.noti),att);
+
+                NotificationManager notificationManager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+
+    //End Code for Notification Channel
+
+}
 }

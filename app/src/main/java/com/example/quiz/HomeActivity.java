@@ -2,7 +2,6 @@ package com.example.quiz;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,46 +11,70 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.quiz.round1QFragments.QuestionsActivity;
 import com.example.quiz.round2QFragments.Question2Activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HomeActivity extends AppCompatActivity {
 
-    private Dialog dialog,dialog2;
+    private Dialog dialog, dialog2;
     public Button button1, button2;
     String team_name;
     public SharedPreferencesConfig sharedPreferences;
-
+    private String markSelect_url = "http://192.168.43.11/tech/markReturn.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         dialog = new Dialog(this);
-        dialog2=new Dialog(this);
+        dialog2 = new Dialog(this);
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
 
-        sharedPreferences=new SharedPreferencesConfig(getApplicationContext());
+        sharedPreferences = new SharedPreferencesConfig(getApplicationContext());
         //Code for enabling and Disabling button
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, markSelect_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String check = response;
+                if (25 <= Integer.parseInt(check)) {
+                    button1.setEnabled(false);
+                    button2.setEnabled(true);
+                } else {
+                    button2.setEnabled(false);
+                    button1.setEnabled(true);
+                }
 
-       if (sharedPreferences.readLoginStatus())
-        {
-            button2.setEnabled(true);
-        }
-       else
-       {
-           button2.setEnabled(false);
-       }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("sha", error.toString());
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("team_name", team_name);
+                return params;
+            }
+        };
+        Mysingleton.getInstance(this).addtoRequest(stringRequest);
 
-
-
-       //End Code for Enabling and Disabling button
-
+        //End Code for Enabling and Disabling button
 
         //Getting Team Name from LoginActivity
-        Intent intent=getIntent();
-        team_name=intent.getStringExtra("team_name");
+        Intent intent = getIntent();
+        team_name = intent.getStringExtra("team_name");
         //End Getting Team Name from LoginActivity
 
     }
@@ -75,9 +98,8 @@ public class HomeActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent=new Intent(HomeActivity.this, QuestionsActivity.class);
-                intent.putExtra("team_name",team_name);
+                Intent intent = new Intent(HomeActivity.this, QuestionsActivity.class);
+                intent.putExtra("team_name", team_name);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -108,16 +130,16 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(HomeActivity.this, Question2Activity.class);
-                intent.putExtra("team_name",team_name);
+                Intent intent = new Intent(HomeActivity.this, Question2Activity.class);
+                intent.putExtra("team_name", team_name);
                 startActivity(intent);
                 dialog2.dismiss();
             }
         });
         dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        sharedPreferences.writeLoginStatus(true);
         dialog2.show();
     }
+
 
 }
 // End  Code Round2 button with Dialog window

@@ -20,15 +20,12 @@ import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.quiz.HomeActivity;
 import com.example.quiz.Mysingleton;
 import com.example.quiz.R;
-import com.example.quiz.SharedPreferencesConfig;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -46,8 +43,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private String team_name;
     private Button button;
     private String markSelect_url = "http://192.168.43.11/tech/markReturn.php";
-    private Dialog dialog,dialog1;
-    public SharedPreferencesConfig sharedPreferences;
+    private Dialog dialog, dialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +56,9 @@ public class QuestionsActivity extends AppCompatActivity {
         //End Getting Team Name from HomeActivity
         button = findViewById(R.id.bt);
         builder = new AlertDialog.Builder(this);
-        dialog=new Dialog(this);
-        dialog1=new Dialog(this);
+        dialog = new Dialog(this);
+        dialog1 = new Dialog(this);
         mTextViewCountDown = findViewById(R.id.timer);
-        sharedPreferences=new SharedPreferencesConfig(getApplicationContext());
         startTimer();
 
         //Add Question1 Fragment
@@ -106,18 +101,14 @@ public class QuestionsActivity extends AppCompatActivity {
                     }
                 });
 
-                try
-                {
-                    if (!QuestionsActivity.this.isFinishing())
-                    {
+                try {
+                    if (!QuestionsActivity.this.isFinishing()) {
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     }
 
-                }
-                catch (Exception e)
-                {
-                    Log.d("res","Error"+e);
+                } catch (Exception e) {
+                    Log.d("res", "Error" + e);
                 }
 
             }
@@ -151,18 +142,14 @@ public class QuestionsActivity extends AppCompatActivity {
                 QuestionsActivity.super.onResume();
             }
         });
-        try
-        {
-            if (!QuestionsActivity.this.isFinishing())
-            {
+        try {
+            if (!QuestionsActivity.this.isFinishing()) {
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
 
-        }
-        catch (Exception e)
-        {
-            Log.d("res","Error"+e);
+        } catch (Exception e) {
+            Log.d("res", "Error" + e);
         }
 
 
@@ -240,28 +227,26 @@ public class QuestionsActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     try {
-                        TextView pop_textView,d1Text;
-                        Button Butround2,ButExit;
-                        String result=response;
-                          dialog.setContentView(R.layout.select_popup);
-                          dialog1.setContentView(R.layout.sad_popup);
-                          dialog.setCancelable(false);
-                          dialog1.setCancelable(false);
-                          pop_textView=dialog.findViewById(R.id.scoreDis);
-                          Butround2=dialog.findViewById(R.id.butRound2);
-                          d1Text=dialog1.findViewById(R.id.d1score);
-                          ButExit=dialog1.findViewById(R.id.butExit);
-                         pop_textView.setText(result);
-                         d1Text.setText(result);
-                          int high_Score=25;
-                          if (high_Score<=Integer.parseInt(result))
-                        {
+                        TextView pop_textView, d1Text;
+                        Button Butround2, ButExit;
+                        String result = response;
+                        dialog.setContentView(R.layout.select_popup);
+                        dialog1.setContentView(R.layout.sad_popup);
+                        dialog.setCancelable(false);
+                        dialog1.setCancelable(false);
+                        pop_textView = dialog.findViewById(R.id.scoreDis);
+                        Butround2 = dialog.findViewById(R.id.butRound2);
+                        d1Text = dialog1.findViewById(R.id.d1score);
+                        ButExit = dialog1.findViewById(R.id.butExit);
+                        pop_textView.setText(result);
+                        d1Text.setText(result);
+                        int high_Score = 25;
+                        if (high_Score <= Integer.parseInt(result)) {
                             Butround2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent=new Intent(QuestionsActivity.this, HomeActivity.class);
-                                    intent.putExtra("team_name",team_name);
-                                    sharedPreferences.writeLoginStatus(true);
+                                    Intent intent = new Intent(QuestionsActivity.this, HomeActivity.class);
+                                    intent.putExtra("team_name", team_name);
                                     startActivity(intent);
                                     dialog.dismiss();
                                     finish();
@@ -269,9 +254,7 @@ public class QuestionsActivity extends AppCompatActivity {
                             });
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             dialog.show();
-                        }
-                        else
-                        {
+                        } else {
                             ButExit.setOnClickListener(new View.OnClickListener() {
                                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                                 @Override
